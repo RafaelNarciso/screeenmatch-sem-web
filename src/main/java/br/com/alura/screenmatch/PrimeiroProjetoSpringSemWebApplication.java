@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch;
 
+import br.com.alura.screenmatch.model.DadosEpisodio;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
@@ -19,23 +20,20 @@ public class PrimeiroProjetoSpringSemWebApplication implements CommandLineRunner
 	public void run(String... args) throws Exception {
 
 		System.out.println("\n=====================================================================\n");
-		System.out.println("Primeiro projeto Spring Sem Web Application");
 		var consumoApi = new ConsumoApi();
 		var json = consumoApi.obterDados("http://www.omdbapi.com/?t=Gilmore+Girls&apikey=d0bc9998");
 		System.out.println(json);
 
-
-
-	/*	System.out.println("\n=====================================================================\n");
-		json = consumoApi.obterDados("https://coffee.alexflipnote.dev/random.json");
-		System.out.println(json);
-		System.out.println("\n=====================================================================\n");
-*/
 		ConverteDados converteDados = new ConverteDados();
 		DadosSerie dados =converteDados.obterDados(json,DadosSerie.class);
 
 		System.out.println(dados);
-	    System.out.println("\n=====================================================================\n");
+
+		json = consumoApi.obterDados("https://www.omdbapi.com/?t=Gilmore+Girls&Season=1&Episode=2&apikey=d0bc9998");
+		DadosEpisodio dadosEpisodio = converteDados.obterDados(json,DadosEpisodio.class);
+		System.out.println("Episodio: " + dadosEpisodio);
+
+		System.out.println("\n=====================================================================\n");
 
 	}
 }
